@@ -9,7 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Text } from '@/components/ui/text';
 import { Textarea } from '@/components/ui/textarea';
 
-import { ADD_NOTE, GET_NOTES } from './graphql';
+import { ADD_NOTE } from './graphql';
 
 const formSchema = z.object({
   title: z.string(),
@@ -19,8 +19,11 @@ const formSchema = z.object({
 type FormType = z.infer<typeof formSchema>;
 
 export function AddNote() {
+  // https://www.apollographql.com/docs/react/data/mutations#refetching-queries
+  // https://github.com/apollographql/apollo-client/issues/5419#issuecomment-598065442
+  // https://github.com/apollographql/apollo-client/issues/5419#issuecomment-598065442
   const [createNote] = useMutation(ADD_NOTE, {
-    refetchQueries: [GET_NOTES],
+    refetchQueries: [ADD_NOTE],
   });
 
   const form = useForm<FormType>({

@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
 export const GET_NOTES = gql`
-  query AllNotes {
-    notes {
+  query AllNotes($page: Int!) {
+    notes(page: $page) {
       title
       contents
       id

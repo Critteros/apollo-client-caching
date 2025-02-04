@@ -6,7 +6,11 @@ import { Note as NoteView } from './Note';
 import type { Note } from './types';
 
 export function NotesView() {
-  const { data, error } = useQuery<{ notes: Note[] }>(GET_NOTES);
+  const { data, error } = useQuery<{ notes: Note[] }>(GET_NOTES, {
+    variables: {
+      page: 0,
+    },
+  });
 
   if (error) {
     console.error('Error loading notes:', error);
