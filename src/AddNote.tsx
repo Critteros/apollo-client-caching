@@ -1,11 +1,15 @@
+import { useMutation } from '@apollo/client';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
+import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Text } from '@/components/ui/text';
 import { Textarea } from '@/components/ui/textarea';
+
+import { ADD_NOTE, GET_NOTES } from './graphql';
 
 const formSchema = z.object({
   title: z.string(),
@@ -15,6 +19,10 @@ const formSchema = z.object({
 type FormType = z.infer<typeof formSchema>;
 
 export function AddNote() {
+  const [createNote] = useMutation(ADD_NOTE, {
+    refetchQueries: [GET_NOTES],
+  });
+
   const form = useForm<FormType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -24,7 +32,13 @@ export function AddNote() {
   });
 
   const onSubmit = (values: FormType) => {
-    console.log(values);
+    form.reset();
+    createNote({
+      variables: {
+        title: values.title,
+        contents: values.contents,
+      },
+    });
   };
 
   return (
@@ -56,6 +70,9 @@ export function AddNote() {
               </FormItem>
             )}
           />
+          <Button type="submit" className="w-full">
+            Add Note
+          </Button>
         </form>
       </Form>
     </div>

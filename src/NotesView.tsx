@@ -1,8 +1,17 @@
 import { useEffect } from 'react';
+import { useQuery } from '@apollo/client';
 
-import { Note } from './Note';
+import { GET_NOTES } from './graphql';
+import { Note as NoteView } from './Note';
+import type { Note } from './types';
 
 export function NotesView() {
+  const { data, error } = useQuery<{ notes: Note[] }>(GET_NOTES);
+
+  if (error) {
+    console.error('Error loading notes:', error);
+  }
+
   useEffect(() => {
     console.log('NotesView mounted');
 
@@ -13,7 +22,7 @@ export function NotesView() {
 
   return (
     <div className="flex flex-wrap gap-2">
-      <Note note={{ title: 'Sample note', contents: 'Sample contents' }} />
+      {data?.notes.map((note) => <NoteView key={note.id} note={note} />)}
     </div>
   );
 }
