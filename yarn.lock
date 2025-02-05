@@ -22,7 +22,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/client@npm:^3.2.0":
+"@apollo/client@npm:^3.0.0":
   version: 3.12.9
   resolution: "@apollo/client@npm:3.12.9"
   dependencies:
@@ -3206,7 +3206,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "apollo-client-caching@workspace:."
   dependencies:
-    "@apollo/client": "npm:^3.2.0"
+    "@apollo/client": "npm:^3.0.0"
     "@eslint/js": "npm:^9.17.0"
     "@hookform/resolvers": "npm:^3.10.0"
     "@ianvs/prettier-plugin-sort-imports": "npm:^4.4.1"
